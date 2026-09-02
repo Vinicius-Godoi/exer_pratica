@@ -24,11 +24,46 @@ int main() {
 		"Dolar",
 		"Peso"
 	};
-	
-	//for (string_f )
-	
+	char escolha;
+	double vlr, tot = 0.00;
+	bool rpt = true;
 	
 	cout << "Para qual moeda deseja converter?" << endl;
+	
+	for (size_t i = 0; i < moedas.size(); ++i){
+		cout << 1 + i << " - " << moedas[i] << endl;
+	}
+	cin >> escolha;
+	
+	
+	 while (rpt == true)
+    {  
+        cout << "Valor: ";
+        cin >> vlr;
+    
+        
+            if (escolha == '1'){
+            tot = 0.17 * vlr;
+            rpt = false;
+        }
+        else if (escolha == '2')
+        {
+            tot = 0.19 * vlr;
+            rpt = false;
+        }
+        else if (escolha == '3')
+        {
+            tot = 0.30 * vlr;
+            rpt = false;
+        }
+        else
+        {
+            cout << "Opção inválida, tente novamente" << endl;
+            rpt = true;
+        }
+    }
+	cout << "Valor da conversão: " << setprecision(2) << tot << endl;
+	
 	
 
 	return 0;
