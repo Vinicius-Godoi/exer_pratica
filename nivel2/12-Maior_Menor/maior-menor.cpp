@@ -15,10 +15,10 @@ int main() {
     cout << "Informe o segundo número: ";
     cin >> n2;
 
-    if (n1-n2 < 0){
+    if (n1<n2){
         cout << n2 << " é maior";
     }
-    else if (n2-n1 < 0){
+    else if (n2<n1){
         cout << n1 << " é maior";
     }
     else if (n1-n2 == 0){
