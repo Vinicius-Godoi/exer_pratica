@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -9,16 +10,40 @@ int main() {
     
     double km = 0.00, vlr_gas = 0.00, consumo = 0.00;
 
-    cout << "Valor do combustível: R$";
-    cin >> vlr_gas;
+    while(true)
+    {
+        cout << "Valor do combustível: R$";
+        if (!(cin >> vlr_gas))
+        {
+            cout << "Valor inválido!" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        
+        cout << "Distância (KM): ";
+        if (!(cin >> km))
+        {
+            cout << "Valor inválido!" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
 
-    cout << "Distância (KM): ";
-    cin >> km;
+        cout << "Consumo (KM/L): ";
+        if (!(cin >> consumo))
+        {
+            cout << "Valor inválido!" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
 
-    cout << "Consumo (KM/L): ";
-    cin >> consumo;
+        break;
+    }
 
-    cout << "Combustível necessário: " << km/consumo << "\nValor total: " << (km/consumo) * vlr_gas <<  endl;
+    cout << fixed << setprecision(2);
+    cout << "\nCombustível necessário: " << km/consumo << "\nValor total: R$" << (km/consumo) * vlr_gas <<  endl;
 
     cin.ignore();
     getchar();

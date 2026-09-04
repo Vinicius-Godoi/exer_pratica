@@ -11,16 +11,18 @@ int main() {
 
     int valor = 0;
 
-    cout << "Valor a sacar: R$";
+    
 
     while (true)
     {
+        cout << "Valor a sacar: R$";
+
         // Validação que certifica que a entrada seja um número inteiro
         if (!(cin >> valor))
         {
             cout << "Entrada inválida! Digite apenas números inteiros.\n" << endl;
             cin.clear();
-            cin.ignore(10000, 'n');
+            cin.ignore(10000, '\n');
             continue; // Volta para o início do while e o executa novamente 
         }
 
