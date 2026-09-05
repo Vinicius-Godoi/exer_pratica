@@ -8,7 +8,7 @@ int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     
-    double km = 0.00, vlr_gas = 0.00, consumo = 0.00;
+    double km = 0, vlr_gas = 0, consumo = 0;
 
     while(true)
     {
