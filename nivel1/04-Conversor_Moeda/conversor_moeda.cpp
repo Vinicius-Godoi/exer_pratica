@@ -38,7 +38,7 @@ int main() {
 	
 	 while (rpt == true)
     {  
-        cout << "Valor: ";
+        cout << "Valor: R$";
         cin >> vlr;
     
         
@@ -65,6 +65,7 @@ int main() {
 	cout << "Valor da conversão: " << setprecision(2) << tot << endl;
 	
 	
-
+    cin.ignore();
+    getchar();
 	return 0;
 }
