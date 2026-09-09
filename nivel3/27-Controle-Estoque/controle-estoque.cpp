@@ -5,29 +5,13 @@
 
 using namespace std;
 
-int maisEstoque(int estoqueItem, int quantidade){
-    estoqueItem += quantidade;
-
-    cout << "Quantidade adicionada ao estoque: " << quantidade << "\nTotal de estoque: " << estoqueItem << endl;
-
-    return 0;
-}
-int menosEstoque(int estoqueItem, int quantidade){
-    if (estoqueItem == 0)
-    {
-        cout << "Estoque zerado!" << endl;
-        return 1;
-    }
-    estoqueItem -= quantidade;
-
-    cout << "Quantidade adicionada ao estoque: " << quantidade << "\nTotal de estoque: " << estoqueItem << endl;
-
-    return 0;
-}
-
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
+    
+    int bola = 0, carro = 0, boneca = 0;
+    int add = 0, sub = 0;
+
     while(true)
     {
         const vector<string> itens = {
@@ -40,61 +24,85 @@ int main() {
         {
             cout << 1+i << " - " << itens[i] << endl;
         }
-        
-        int bola = 0, carro = 0, boneca = 0;
-        int add = 0, sub = 0;
 
         char opcao;
         string movEstoque;
+
         cin >> opcao;
         switch (opcao){
+            // Bola
             case '1':
-                cout << "Qual operação deseja realizar?\nadd - Adicionar ao estoque      sub - Descontar do estoque" << endl;
+                cout << "\nEstoque Bola: " << bola << endl;
+
+                cout << "\nQual operação deseja realizar?\n\nadd - Adicionar ao estoque      sub - Descontar do estoque" << endl;
                 cin >> movEstoque;
+
                 if (movEstoque == "add") {
-                        cout << "Quantidade a adicionar: ";
-                        cin >> add;
 
-                        maisEstoque(bola, add);
-                } else if (movEstoque == "sub") {
-                        cout << "Quantidade a descontar: ";
-                        cin >> sub;
+                    cout << "\nQuantidade a adicionar: ";
+                    cin >> add;
 
-                        menosEstoque(bola, sub);
-                }
+                    bola += add;
 
-                break;
-            
-            case '2':
-                cout << "Qual operação deseja realizar?\nadd - Adicionar ao estoque      sub - Descontar do estoque" << endl;
-                cin >>movEstoque;   
-                if (movEstoque == "add") {
-                        cout << "Quantidade a adicionar: ";
-                        cin >> add;
+                    cout << "\nEstoque Bola: " << bola << endl;
+            } 
+                else if (movEstoque == "sub") {
+                    cout << "\nQuantidade a descontar: ";
+                    cin >> sub;
 
-                        maisEstoque(carro, add);
-                } else if (movEstoque == "sub") {
-                        cout << "Quantidade a descontar: ";
-                        cin >> sub;
+                    bola -= sub;
 
-                        menosEstoque(carro, sub);
+                    cout << "\nEstoque Bola: " << bola << endl;
                 }
                 
                 break;
+            // Carrinho
+            case '2':
+                cout << "\nEstoque Carrinho: " << carro << endl;
 
-            case '3':
-                cout << "Qual operação deseja realizar?\nadd - Adicionar ao estoque      sub - Descontar do estoque" << endl;
-                cin >>movEstoque;
+                cout << "\nQual operação deseja realizar?\n\nadd - Adicionar ao estoque      sub - Descontar do estoque" << endl;
+                cin >>movEstoque; 
+
                 if (movEstoque == "add") {
-                        cout << "Quantidade a adicionar: ";
-                        cin >> add;
+                    cout << "\nQuantidade a adicionar: ";
+                    cin >> add;
 
-                        maisEstoque(boneca, add);
-                } else if (movEstoque == "sub") {
-                        cout << "Quantidade a descontar: ";
-                        cin >> sub;
+                    carro += add;
 
-                        menosEstoque(boneca, sub);
+                    cout << "\nEstoque Carrinho: " << carro << endl;
+                } 
+                else if (movEstoque == "sub") {
+                    cout << "\nQuantidade a descontar: ";
+                    cin >> sub;
+
+                    carro -= sub;
+
+                    cout << "\nEstoque Carrinho: " << bola << endl;
+                }
+                
+                break;
+            // Boneca
+            case '3':
+                cout << "\nEstoque Boneca: " << boneca << endl;
+
+                cout << "\nQual operação deseja realizar?\n\nadd - Adicionar ao estoque      sub - Descontar do estoque" << endl;
+                cin >>movEstoque;
+
+                if (movEstoque == "add") {
+                    cout << "\nQuantidade a adicionar: ";
+                    cin >> add;
+
+                    boneca += add;
+
+                    cout << "\nEstoque Boneca: " << boneca << endl;
+                } 
+                else if (movEstoque == "sub") {
+                    cout << "\nQuantidade a descontar: ";
+                    cin >> sub;
+
+                    boneca -= sub;
+
+                    cout << "\nEstoque Boneca: " << boneca << endl;
                 }
                 
                 break;
@@ -102,12 +110,13 @@ int main() {
         }
         
         char repeat;
-        cout << "Deseja continuar? (s)" << endl;
+        cout << "\n\nDeseja continuar? (s)" << endl;
         cin >> repeat;
 
         if (tolower(repeat) == 's') {continue;}
 
         break;
     }
+
     return 0;
 }
