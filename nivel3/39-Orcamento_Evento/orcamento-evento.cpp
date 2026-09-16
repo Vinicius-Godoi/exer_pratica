@@ -37,7 +37,6 @@ int main() {
         break;
     }
     
-
     cin.ignore();
     getchar();
     return 0;
