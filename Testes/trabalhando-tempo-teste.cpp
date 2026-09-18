@@ -34,11 +34,13 @@ int main() {
 
     // Exibindo os resultados
     cout << "Horario completo 1: " << format("{:%H:%M:%S}\n", horario_completo);
+    cout << h_func.count() << " horas" << endl;
     cout << "Horas: " << minha_hora.count() << "h | ";
     cout << "Minutos: " << meu_minuto.count() << "m | ";
     cout << "Segundos: " << meu_segundo.count() << "s\n\n";
 
     cout << "Horario completo 2: " << format("{:%H:%M:%S}\n", outro_horario_completo);
 
+    getchar();
     return 0;
 }
