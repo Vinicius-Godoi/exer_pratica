@@ -36,17 +36,6 @@ auto inputHora()
     return horaFinal;
 }
 
-auto convertHora(int hora, int minuto, int segundo)
-{
-    hours hr_input{hora};
-    minutes min_input{minuto};
-    seconds seg_input{segundo};
-
-    auto convertido = hr_input + min_input + seg_input;
-
-    return convertido;
-}
-
 double calcTotal(auto entrada, auto saida, double taxa)
 {
     
@@ -126,9 +115,6 @@ int main() {
                 cout << "Valor Total: R$" << valorTotal << endl;
                 break;
         }
-
-        
-
 
         char repeat;
         cout << "\nDeseja repetir? (Sim = 's' | Não - [QUALQUER TECLA]) - ";
