@@ -19,24 +19,38 @@ auto inputHora()
 {
     int hora = 0, min = 0, seg = 0;
 
+    // Laço para validação de entrada de horas
     while(true)
     {
         cout << "Hora: ";
-        cin >> hora;
-        if(!hora)
+        if(!(cin >> hora))
+        {
+            cout << "[Informe um horário válido!]\n" << endl; 
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        if(hora < 0 || hora > 24)
         {   
-            cout << "[Informe um valor válido!]\n" << endl; 
+            cout << "[Informe um horário válido!]\n" << endl; 
             cin.clear();
             cin.ignore(10000, '\n');
             continue;
         }
         hours horas{hora};
+
         
         cout << "Minutos: ";
-        cin >> min;
-        if(!min)
+        if(!(cin >> min))
+        {
+            cout << "[Informe um horário válido!]\n" << endl; 
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        if(min < 0 || min > 59)
         {   
-            cout << "[Informe um valor válido!]\n" << endl; 
+            cout << "[Informe um horário válido!]\n" << endl; 
             cin.clear();
             cin.ignore(10000, '\n');
             continue;
@@ -44,10 +58,16 @@ auto inputHora()
         minutes minutos{min};
         
         cout << "Segundos: ";
-        cin >> seg;
-        if(!seg)
+        if(!(cin >> seg))
+        {
+            cout << "[Informe um horário válido!]\n" << endl; 
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        if(seg < 0 || seg > 59)
         {   
-            cout << "[Informe um valor válido!]\n" << endl; 
+            cout << "[Informe um horário válido!]\n" << endl; 
             cin.clear();
             cin.ignore(10000, '\n');
             continue;
@@ -60,6 +80,34 @@ auto inputHora()
 
         break;
     }
+}
+int listaValores(auto lista)
+{
+    cout << "\nTipo de veículo:" << endl;
+        for(size_t i = 0; i < lista.size(); i++){cout << 1 + i << " - " << lista[i] << endl;}
+    while(true)
+    {
+        int opcao;
+        if(!(cin >> opcao))
+        {
+            cout << "Insira um número correspondente às opções.\n" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+
+        if(opcao < 1 || opcao > 4)
+        {
+            cout << "Insira um número correspondente às opções.\n" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+
+        return opcao;
+        break;
+    }
+        
 }
 double calcTotal(auto entrada, auto saida, double taxa)
 {
@@ -100,21 +148,9 @@ int main() {
         // Saída
         auto horaSaida = inputHora();
         cout << "\nHorário de entrada: " << format("{:%H:%M:%S}", horaSaida) << endl;
-        
-        cout << "\nTipo de veículo:" << endl;
-        for(size_t i = 0; i < modelos.size(); i++){cout << 1 + i << " - " << modelos[i] << endl;}
-        int opc;
-        cin >> opc;
-
-        if(!opc || opc < 1 || opc > 4)
-        {
-            cout << "Insira um número correspondente às opções.\n" << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-            continue;
-        }
-
         double valorTotal = 0;
+
+        int opc = listaValores(modelos);
 
         cout << fixed << setprecision(2) << endl;
 
@@ -151,6 +187,5 @@ int main() {
     }
 
     cin.ignore();
-    getchar();
     return 0;
 }
