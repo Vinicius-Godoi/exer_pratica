@@ -46,6 +46,16 @@ auto convertHora(int hora, int minuto, int segundo)
     return convertido;
 }
 
+double calcTotal(auto entrada, auto saida, int veiculo)
+{
+    seconds segEntrada = entrada;
+    seconds segSaida = saida;
+
+    double total = (segSaida.count() - segEntrada.count()) * veiculo;
+
+    return total;
+}
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -67,15 +77,31 @@ int main() {
         int opc;
         cin >> opc;
 
+        double valorTotal = 0;
 
+        switch(opc)
+        {
+            case 1:
+                valorTotal = calcTotal(horaEntrada, horaSaida, 2);
+                cout << "Valor Total: R$" << valorTotal << endl;
+                break;
+              
+            case 2:
+                valorTotal = calcTotal(horaEntrada, horaSaida, 3);
+                cout << "Valor Total: R$" << valorTotal << endl;
+                break;
+            
+            case 3:
+                valorTotal = calcTotal(horaEntrada, horaSaida, 4);
+                cout << "Valor Total: R$" << valorTotal << endl;
+                break;
+        }
 
-        /*switch(opc)
-            case '1':*/
-
+        
 
 
         char repeat;
-        cout << "Deseja repetir? (Sim = 's' | Não - [QUALQUER TECLA]) - ";
+        cout << "\nDeseja repetir? (Sim = 's' | Não - [QUALQUER TECLA]) - ";
         cin >> repeat;
 
         if(repeat == tolower('s')){cout << '\n' << endl; continue;}
