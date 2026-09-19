@@ -51,9 +51,13 @@ double calcTotal(auto entrada, auto saida, int veiculo)
     seconds segEntrada = entrada;
     seconds segSaida = saida;
 
-    double total = (segSaida.count() - segEntrada.count()) * veiculo;
+    
 
-    return total;
+    double permanencia = (segSaida.count() - segEntrada.count());
+
+    cout << "Permaneceu " << permanencia << " segundos" << endl;
+
+    return permanencia * veiculo;
 }
 
 int main() {
