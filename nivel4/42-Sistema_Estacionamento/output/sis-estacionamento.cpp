@@ -19,23 +19,48 @@ auto inputHora()
 {
     int hora = 0, min = 0, seg = 0;
 
-    cout << "Hora: ";
-    cin >> hora;
-    hours horas{hora};
-    
-    cout << "Minutos: ";
-    cin >> min;
-    minutes minutos{min};
-    
-    cout << "Segundos: ";
-    cin >> seg;
-    seconds segundos{seg};
+    while(true)
+    {
+        cout << "Hora: ";
+        cin >> hora;
+        if(!hora)
+        {   
+            cout << "[Informe um valor válido!]\n" << endl; 
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        hours horas{hora};
+        
+        cout << "Minutos: ";
+        cin >> min;
+        if(!min)
+        {   
+            cout << "[Informe um valor válido!]\n" << endl; 
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        minutes minutos{min};
+        
+        cout << "Segundos: ";
+        cin >> seg;
+        if(!seg)
+        {   
+            cout << "[Informe um valor válido!]\n" << endl; 
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        seconds segundos{seg};
 
-    auto horaFinal = horas + minutos + segundos;
+        auto horaFinal = horas + minutos + segundos;
 
-    return horaFinal;
+        return horaFinal;
+
+        break;
+    }
 }
-
 double calcTotal(auto entrada, auto saida, double taxa)
 {
     
