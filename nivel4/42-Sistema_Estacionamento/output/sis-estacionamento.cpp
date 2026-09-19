@@ -10,11 +10,12 @@ O programa calcula o tempo de permanência e o valor a pagar.*/
 #include <chrono>
 #include <string>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 using namespace std::chrono;
 
-auto dadosHora()
+auto inputHora()
 {
     int hora = 0, min = 0, seg = 0;
 
@@ -46,18 +47,24 @@ auto convertHora(int hora, int minuto, int segundo)
     return convertido;
 }
 
-double calcTotal(auto entrada, auto saida, int veiculo)
+double calcTotal(auto entrada, auto saida, double taxa)
 {
-    seconds segEntrada = entrada;
-    seconds segSaida = saida;
-
     
+    auto permSeg = saida - entrada;
+    if(permSeg.count() < 0)
+    {permSeg += hours(24);}
 
-    double permanencia = (segSaida.count() - segEntrada.count());
+    minutes permMin = duration_cast<minutes>(permSeg);
 
-    cout << "Permaneceu " << permanencia << " segundos" << endl;
+    cout << "Permaneceu " << permMin.count() << " minutos" << endl;
 
-    return permanencia * veiculo;
+    if(permMin.count() <= 10)
+    {
+        taxa = 0;
+        cout << "Tempo de permanência dentro da carência." << endl;
+    }
+
+    return permMin.count() * taxa;
 }
 
 int main() {
@@ -66,37 +73,56 @@ int main() {
     
     while(true)
     {
-        const vector<string> modelos = {"Carro popular", "SUV", "Camionete", "Moto"};
+        const vector<string> modelos = {"Carro popular = R$12,00/hora", "SUV = R$15,00/hora", "Camionete = R$18,00/hora", "Moto = R$6,00/hora"};
+
+        cout << "ESTACIONAMENTO\n" << "\nEntrada →" << endl;
+
 
         // Entrada
-        auto horaEntrada = dadosHora();
-        cout << "Horário de entrada: " << format("{:%H:%M:%S}", horaEntrada) << endl;
+        auto horaEntrada = inputHora();
+        cout << "\nHorário de entrada: " << format("{:%H:%M:%S}", horaEntrada) << endl;
 
+        cout << "\nSaída →" << endl;
         // Saída
-        auto horaSaida = dadosHora();
-        cout << "Horário de entrada: " << format("{:%H:%M:%S}", horaSaida) << endl;
-
-        cout << "Tipo de veículo:" << endl;
+        auto horaSaida = inputHora();
+        cout << "\nHorário de entrada: " << format("{:%H:%M:%S}", horaSaida) << endl;
+        
+        cout << "\nTipo de veículo:" << endl;
         for(size_t i = 0; i < modelos.size(); i++){cout << 1 + i << " - " << modelos[i] << endl;}
         int opc;
         cin >> opc;
 
+        if(!opc || opc < 1 || opc > 4)
+        {
+            cout << "Insira um número correspondente às opções.\n" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+
         double valorTotal = 0;
+
+        cout << fixed << setprecision(2) << endl;
 
         switch(opc)
         {
-            case 1:
-                valorTotal = calcTotal(horaEntrada, horaSaida, 2);
+            case 1:// Carro Popular
+                valorTotal = calcTotal(horaEntrada, horaSaida, 0.20);
                 cout << "Valor Total: R$" << valorTotal << endl;
                 break;
               
-            case 2:
-                valorTotal = calcTotal(horaEntrada, horaSaida, 3);
+            case 2: // SUV
+                valorTotal = calcTotal(horaEntrada, horaSaida, 0.25);
                 cout << "Valor Total: R$" << valorTotal << endl;
                 break;
             
-            case 3:
-                valorTotal = calcTotal(horaEntrada, horaSaida, 4);
+            case 3: // Camionete
+                valorTotal = calcTotal(horaEntrada, horaSaida, 0.30);
+                cout << "Valor Total: R$" << valorTotal << endl;
+                break;
+
+            case 4: // Moto
+                valorTotal = calcTotal(horaEntrada, horaSaida, 0.10);
                 cout << "Valor Total: R$" << valorTotal << endl;
                 break;
         }
