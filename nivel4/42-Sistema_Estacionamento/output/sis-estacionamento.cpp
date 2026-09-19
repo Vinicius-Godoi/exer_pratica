@@ -15,6 +15,13 @@ O programa calcula o tempo de permanência e o valor a pagar.*/
 using namespace std;
 using namespace std::chrono;
 
+// Estrutura para organizar as taxas por tipo de veículo
+struct Veiculo{
+    string nome;
+    double valorHora;
+};
+
+// Funções
 auto inputHora()
 {
     int hora = 0, min = 0, seg = 0;
@@ -30,7 +37,7 @@ auto inputHora()
             cin.ignore(10000, '\n');
             continue;
         }
-        if(hora < 0 || hora > 24)
+        if(hora < 0 || hora > 23)
         {   
             cout << "[Informe um horário válido!]\n" << endl; 
             cin.clear();
@@ -77,56 +84,47 @@ auto inputHora()
         auto horaFinal = horas + minutos + segundos;
 
         return horaFinal;
-
-        break;
     }
 }
-int listaValores(auto lista)
-{
+int listaValores(const vector<Veiculo>& lista) {
     cout << "\nTipo de veículo:" << endl;
-        for(size_t i = 0; i < lista.size(); i++){cout << 1 + i << " - " << lista[i] << endl;}
-    while(true)
-    {
-        int opcao;
-        if(!(cin >> opcao))
-        {
-            cout << "Insira um número correspondente às opções.\n" << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-            continue;
-        }
-
-        if(opcao < 1 || opcao > 4)
-        {
-            cout << "Insira um número correspondente às opções.\n" << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-            continue;
-        }
-
-        return opcao;
-        break;
+    for (size_t i = 0; i < lista.size(); i++) {
+        cout << i + 1 << " - " << lista[i].nome 
+             << " = R$" << fixed << setprecision(2) << lista[i].valorHora << "/hora" << endl;
     }
-        
+
+    int opcao;
+    while (true) {
+        cout << "Opção: ";
+        if (!(cin >> opcao) || opcao < 1 || opcao > static_cast<int>(lista.size())) {
+            cout << "Opção inválida. Digite um número de 1 a " << lista.size() << ".\n" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+        return opcao - 1; // Retorna o índice base 0
+    }
 }
-double calcTotal(auto entrada, auto saida, double taxa)
-{
-    
+double calcTotal(auto entrada, auto saida, double valorHora){
     auto permSeg = saida - entrada;
-    if(permSeg.count() < 0)
-    {permSeg += hours(24);}
+
+    if(permSeg.count() < 0){
+        permSeg += hours(24);
+    }
 
     minutes permMin = duration_cast<minutes>(permSeg);
 
-    cout << "Permaneceu " << permMin.count() << " minutos" << endl;
+    cout << "Permanencia: " << permMin.count() << " minutos" << endl;
 
     if(permMin.count() <= 10)
     {
-        taxa = 0;
+        valorHora = 0;
         cout << "Tempo de permanência dentro da carência." << endl;
     }
 
-    return permMin.count() * taxa;
+    // Cobrança proporcional ao tempo em horas
+    double taxaPorMinuto = valorHora / 60.0;
+    return permMin.count() * taxaPorMinuto;
 }
 
 int main() {
@@ -135,11 +133,14 @@ int main() {
     
     while(true)
     {
-        const vector<string> modelos = {"Carro popular = R$12,00/hora", "SUV = R$15,00/hora", "Camionete = R$18,00/hora", "Moto = R$6,00/hora"};
+        const vector<Veiculo> frota = {
+            {"Carro popular", 12.00},
+            {"SUV", 15.00},
+            {"Camionete", 18.00},
+            {"Moto", 6.00}
+        };
 
         cout << "ESTACIONAMENTO\n" << "\nEntrada →" << endl;
-
-
         // Entrada
         auto horaEntrada = inputHora();
         cout << "\nHorário de entrada: " << format("{:%H:%M:%S}", horaEntrada) << endl;
@@ -147,41 +148,22 @@ int main() {
         cout << "\nSaída →" << endl;
         // Saída
         auto horaSaida = inputHora();
-        cout << "\nHorário de entrada: " << format("{:%H:%M:%S}", horaSaida) << endl;
-        double valorTotal = 0;
+        cout << "\nHorário de saída: " << format("{:%H:%M:%S}", horaSaida) << endl;
 
-        int opc = listaValores(modelos);
+        int indexVeiculo = listaValores(frota);
+        double valorTotal = calcTotal(horaEntrada, horaSaida, frota[indexVeiculo].valorHora);
 
         cout << fixed << setprecision(2) << endl;
-
-        switch(opc)
-        {
-            case 1:// Carro Popular
-                valorTotal = calcTotal(horaEntrada, horaSaida, 0.20);
-                cout << "Valor Total: R$" << valorTotal << endl;
-                break;
-              
-            case 2: // SUV
-                valorTotal = calcTotal(horaEntrada, horaSaida, 0.25);
-                cout << "Valor Total: R$" << valorTotal << endl;
-                break;
-            
-            case 3: // Camionete
-                valorTotal = calcTotal(horaEntrada, horaSaida, 0.30);
-                cout << "Valor Total: R$" << valorTotal << endl;
-                break;
-
-            case 4: // Moto
-                valorTotal = calcTotal(horaEntrada, horaSaida, 0.10);
-                cout << "Valor Total: R$" << valorTotal << endl;
-                break;
-        }
+        cout << "Valor Total: R$" << valorTotal << endl;
 
         char repeat;
-        cout << "\nDeseja repetir? (Sim = 's' | Não - [QUALQUER TECLA]) - ";
+        cout << "\nDeseja repetir? (S/N): ";
         cin >> repeat;
 
-        if(repeat == tolower('s')){cout << '\n' << endl; continue;}
+        if(tolower(repeat) == 's'){
+            cout << "\n----------------------------------------\n\n";
+            continue;
+        }
         
         break;
     }
